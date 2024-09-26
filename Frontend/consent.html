@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Hub Demo - Consent</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/common/styles/main.css">
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        #content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        input[type="text"], input[type="date"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #cancelButton {
+            background-color: #e74c3c;
+        }
+        #cancelButton:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <div id="sidebar"></div>
+        <main>
+            <div id="header"></div>
+            <section id="main-content">
+                <div id="content">
+                    <h1>Consent</h1>
+                    <form id="theForm">
+                        <div class="form-group">
+                            <label for="consentType"><i class="fas fa-file-signature"></i> Consent Type:</label>
+                            <select id="consentType" name="consentType" required
+                                    data-description="Select the type of consent being given"
+                                    data-fieldname="consent_type__c">
+                                <option value="">Select Consent Type</option>
+                                <option value="Telehealth">Telehealth</option>
+                                <option value="MTM">MTM</option>
+                                <option value="Sensitive">Sensitive</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="signatureType"><i class="fas fa-pen"></i> Type of Signature:</label>
+                            <select id="signatureType" name="signatureType" required
+                                    data-description="Select the method of signature for this consent"
+                                    data-fieldname="signature_type__c">
+                                <option value="">Select Signature Type</option>
+                                <option value="Digital">Digital</option>
+                                <option value="In-person">In-person</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="memberName"><i class="fas fa-user"></i> Member:</label>
+                            <input type="text" id="memberName" name="memberName" value="John Doe" required
+                                   data-description="Represents the patient's name. This is different then the responsible party name."
+                                   data-fieldname="member_name__c">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="isSelfResponsible" name="isSelfResponsible"
+                                       data-description="Indicate if the member is self-responsible"
+                                       data-fieldname="is_self_responsible__c">
+                                Is member self responsible?
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="responsiblePartyName"><i class="fas fa-user-friends"></i> Responsible Party Name:</label>
+                            <input type="text" id="responsiblePartyName" name="responsiblePartyName"
+                                   data-description="Represents the  responsible party's name "
+                                   data-fieldname="responsible_party_name__c">
+                        </div>
+                        <div class="form-group">
+                            <label for="responsiblePartyRole"><i class="fas fa-user-tag"></i> Responsible Party Role:</label>
+                            <input type="text" id="responsiblePartyRole" name="responsiblePartyRole"
+                                   data-description="Represents the  role of the responsible party (options: Legal Guardian, POA, Health surrogate)"
+                                   data-fieldname="responsible_party_role__c">
+                        </div>
+                        <div class="form-group">
+                            <label for="consentDate"><i class="fas fa-calendar-alt"></i> Consent Create Date:</label>
+                            <input type="date" id="consentDate" name="consentDate" required
+                                   data-description="Select the date when the consent was created"
+                                   data-fieldname="consent_create_date__c">
+                        </div>
+                        <div>
+                            <button type="submit">Submit</button>
+                            <button type="button" id="cancelButton">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <a href="#" id="aiHubLink"><i class="fas fa-user-md"></i> Clinical Companion</a>
+    </footer>
+
+    <div id="chatPopup" class="hidden">
+        <div id="chatWindow">
+            <div id="chatHeader">
+                <h2><i class="fas fa-user-md"></i> Clinical Companion</h2>
+                <div id="chatControls">
+                    <button id="maximizeButton" class="controlButton"><i class="fas fa-expand"></i></button>
+                    <button id="minimizeButton" class="controlButton"><i class="fas fa-minus"></i></button>
+                    <button id="clearButton" class="controlButton"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+            <div id="chatButtons">
+                <!-- Dynamic buttons will be inserted here -->
+            </div>
+            <div id="chatHistory"></div>
+            <div id="loadingIndicator" class="hidden">
+                <i class="fas fa-spinner fa-spin"></i> Thinking...
+            </div>
+            <div id="chatInput">
+                <input type="text" id="messageInput" placeholder="Type your message...">
+                <button id="sendButton" disabled>Send</button>
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" id="pageName" value="consent_page">
+
+    <script src="script.js"></script>
+    <script>
+        // Set default date to today
+        document.getElementById('consentDate').valueAsDate = new Date();
+
+        // Load components
+        fetch('common/html/sidebar.html').then(response => response.text()).then(data => document.getElementById('sidebar').innerHTML = data);
+        fetch('common/html/header.html').then(response => response.text()).then(data => document.getElementById('header').innerHTML = data);
+    </script>
+</body>
+</html>

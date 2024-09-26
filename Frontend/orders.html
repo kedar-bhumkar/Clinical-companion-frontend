@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Hub Demo</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Add Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/common/styles/main.css">
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', Arial, sans-serif; /* Modern, clean font */
+            background-color: #f5f7fa; /* Light gray background */
+            color: #333; /* Dark gray text for better readability */
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        #content {
+            flex: 1 0 auto;
+            max-width: 1200px; /* Increased max-width for a wider layout */
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .section {
+            background-color: #ffffff; /* White background for sections */
+            border: none; /* Remove border */
+            margin-bottom: 20px;
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+            overflow: hidden;
+        }
+        .section-header {
+            background-color: #3498db; /* Blue header background */
+            color: #ffffff; /* White text */
+            padding: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .section-header:hover {
+            background-color: #2980b9; /* Darker blue on hover */
+        }
+        .section-content {
+            padding: 20px;
+            display: block; /* Changed from 'none' to 'block' */
+        }
+        .section-content.closed {
+            display: none;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500; /* Slightly bolder labels */
+            color: #555; /* Darker label color */
+        }
+        input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"], select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #3498db; /* Blue border on focus */
+            box-shadow: 0 0 5px rgba(52,152,219,0.5); /* Subtle glow effect */
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        footer {
+            flex-shrink: 0;
+            background-color: #34495e; /* Dark footer background */
+            padding: 15px;
+            text-align: right;
+            color: #ecf0f1; /* Light text color */
+        }
+        #aiHubLink {
+            text-decoration: none;
+            color: #ecf0f1;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        #aiHubLink:hover {
+            color: #3498db; /* Blue color on hover */
+        }
+        /* Add styles for the h1 title */
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 28px;
+            text-align: left;
+        }
+
+        .form-group label i {
+            margin-right: 8px;
+            width: 20px;
+            text-align: center;
+        }
+        .section-header i {
+            margin-right: 10px;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.15; /* Adjust this value to make the image more or less faded */
+            z-index: -1;
+        }
+
+        #content {
+            background-color: rgba(255, 255, 255, 0.9); /* Add a semi-transparent white background */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        /* Adjust other styles for better contrast if needed */
+        .section {
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Add these new styles for the two-column layout */
+        .two-column-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            margin-bottom: 0.25rem;
+        }
+        .full-width {
+            grid-column: 1 / -1;
+        }
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <div id="sidebar"></div>
+        <main>
+            <div id="header"></div>
+            <section id="main-content">                
+                <div id="content">
+                    <!-- Your main content goes here -->
+                    <h1>Orders page</h1>
+                    <form id="theForm">
+                        <div class="section">
+                            <div class="section-header" onclick="toggleSection(this)">
+                                <i class="fas fa-clipboard-list"></i> Section 1: Order Details
+                            </div>
+                            <div class="section-content two-column-form">
+                                <div class="form-group">
+                                    <label for="orderDate"><i class="fas fa-calendar-alt"></i> Order Date:</label>
+                                    <input type="date" id="orderDate" name="orderDate" required
+                                        data-description="Select the order date, defaults to today"
+                                        data-fieldname="order_date__c">
+                                </div>
+                                <div class="form-group">
+                                    <label for="orderType"><i class="fas fa-tasks"></i> Order Type:</label>
+                                    <select id="orderType" name="orderType" required
+                                            data-description="Select the type of order"
+                                            data-fieldname="order_type__c">
+                                        <option value="">Select Order Type</option>
+                                        <option value="Referral">Referral</option>
+                                        <option value="Lab">Lab</option>
+                                        <option value="DME">DME</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="weight"><i class="fas fa-weight"></i> Member Weight:</label>
+                                    <input type="number" id="weight" name="weight" step="0.1" required
+                                        data-description="Enter the member's weight in pounds"
+                                        data-fieldname="member_weight__c">
+                                </div>
+                                <div class="form-group">
+                                    <label for="height"><i class="fas fa-ruler-vertical"></i> Member Height:</label>
+                                    <input type="number" id="height" name="height" step="0.1" required
+                                        data-description="Enter the member's height in inches"
+                                        data-fieldname="member_height__c">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="allergies"><i class="fas fa-allergies"></i> Member Allergies:</label>
+                                    <textarea id="allergies" name="allergies"
+                                            data-description="List any known allergies of the member"
+                                            data-fieldname="member_allergies__c"></textarea>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="diagnosis"><i class="fas fa-stethoscope"></i> Member Diagnosis:</label>
+                                    <textarea id="diagnosis" name="diagnosis"
+                                            data-description="Enter the member's diagnosis"
+                                            data-fieldname="member_diagnosis__c"></textarea>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="medications"><i class="fas fa-pills"></i> Member Current Medications:</label>
+                                    <textarea id="medications" name="medications"
+                                            data-description="List all current medications the member is taking"
+                                            data-fieldname="member_current_medications__c"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <div class="section-header" onclick="toggleSection(this)">
+                                <i class="fas fa-sticky-note"></i> Section 2: Order Notes
+                            </div>
+                            <div class="section-content two-column-form">
+                                <div class="form-group full-width">
+                                    <label for="orderNotes"><i class="fas fa-comment-medical"></i> Order Notes:</label>
+                                    <textarea id="orderNotes" name="orderNotes"
+                                            data-description="Enter any additional notes or comments about the order"
+                                            data-fieldname="order_notes__c"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+    </section>
+    </main>
+    </div>
+    <footer>
+        <a href="#" id="aiHubLink"><i class="fas fa-user-md"></i> Clinical Companion</a>
+    </footer>
+
+    <div id="chatPopup" class="hidden">
+        <div id="chatWindow">
+            <div id="chatHeader">
+                <h2><i class="fas fa-user-md"></i> Clinical Companion</h2>
+                <div id="chatControls">
+                    <button id="maximizeButton" class="controlButton"><i class="fas fa-expand"></i></button>
+                    <button id="minimizeButton" class="controlButton"><i class="fas fa-minus"></i></button>
+                    <button id="clearButton" class="controlButton"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+            <div id="chatButtons">
+                <!-- Dynamic buttons will be inserted here -->
+            </div>
+            <div id="chatHistory"></div>
+            <div id="loadingIndicator" class="hidden">
+                <i class="fas fa-spinner fa-spin"></i> Thinking...
+            </div>
+            <div id="chatInput">
+                <input type="text" id="messageInput" placeholder="Type your message...">
+                <button id="sendButton" disabled>Send</button>
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" id="pageName" value="order_page">
+
+    <script src="script.js"></script>
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            content.classList.toggle('closed');
+        }
+
+        // Set default date to today
+        document.getElementById('orderDate').valueAsDate = new Date();
+    </script>
+    <script>
+        // Load components
+        fetch('common/html/sidebar.html').then(response => response.text()).then(data => document.getElementById('sidebar').innerHTML = data);
+        fetch('common/html/header.html').then(response => response.text()).then(data => document.getElementById('header').innerHTML = data);
+    </script>    
+</body>
+</html>

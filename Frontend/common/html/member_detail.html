@@ -1,0 +1,95 @@
+<div class="member-details">
+    <h2>Member Details</h2>
+    <form class="two-column-form">
+        <div class="form-group">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" value="John">
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" value="Doe">
+        </div>
+        <div class="form-group">
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" value="1990-01-01">
+        </div>
+        <div class="form-group">
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender">
+                <option value="">Select</option>
+                <option value="male" selected>Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="john.doe@example.com">
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" value="123-456-7890">
+        </div>
+        <div class="form-group">
+            <label for="smsPreference">SMS Preference:</label>
+            <input type="checkbox" id="smsPreference" name="smsPreference" checked>
+        </div>
+        <div class="form-group">
+            <label for="emailPreference">Email Preference:</label>
+            <input type="checkbox" id="emailPreference" name="emailPreference" checked>
+        </div>
+        <div class="form-group">
+            <label for="language">Language Preference:</label>
+            <select id="language" name="language">
+                <option value="">Select</option>
+                <option value="en" selected>English</option>
+                <option value="es">Spanish</option>
+                <!-- Add more language options as needed -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="timezone">Timezone:</label>
+            <select id="timezone" name="timezone">
+                <option value="">Select</option>
+                <option value="EST" selected>Eastern Time</option>
+                <option value="CST">Central Time</option>
+                <!-- Add more timezone options as needed -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" value="123 Main St">
+        </div>
+        <div class="form-group">
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" value="Anytown">
+        </div>
+        <div class="form-group">
+            <label for="state">State:</label>
+            <input type="text" id="state" name="state" value="CA">
+        </div>
+        <div class="form-group">
+            <label for="zip">Zip:</label>
+            <input type="text" id="zip" name="zip" value="12345">
+        </div>
+        <div class="form-group">
+            <label for="country">Country:</label>
+            <input type="text" id="country" name="country" value="USA">
+        </div>
+    </form>
+</div>
+
+<style>
+    .two-column-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+    .form-group label {
+        margin-bottom: 0.25rem;
+    }
+</style>

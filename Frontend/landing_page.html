@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Hub Demo</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Add Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/common/styles/main.css">
+</head>
+<body>
+    <div id="app-container">
+        <div id="sidebar"></div>
+        <main>
+            <div id="header"></div>
+            <section id="main-content">
+                <div id="member-detail" class="content-section"></div>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <a href="#" id="aiHubLink"><i class="fas fa-user-md"></i> Clinical Companion</a>
+    </footer>
+
+    <div id="chatPopup" class="hidden">
+        <div id="chatWindow">
+            <div id="chatHeader">
+                <h4><i class="fas fa-user-md"></i> Clinical Companion</h4>
+                <div id="chatControls">
+                    <button id="maximizeButton" class="controlButton"><i class="fas fa-expand"></i></button>
+                    <button id="minimizeButton" class="controlButton"><i class="fas fa-minus"></i></button>
+                    <button id="clearButton" class="controlButton"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+            <div id="chatButtons">
+                <!-- Dynamic buttons will be inserted here -->
+            </div>
+            <div id="chatHistory"></div>
+            <div id="loadingIndicator" class="hidden">
+                <i class="fas fa-spinner fa-spin"></i> Thinking...
+            </div>
+            <div id="chatInput">
+                <input type="text" id="messageInput" placeholder="Type your message...">
+                <button id="sendButton" disabled>Send</button>
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" id="pageName" value="landing_page">
+
+    <script src="script.js"></script>
+    <script>
+        // Load components
+        fetch('common/html/sidebar.html').then(response => response.text()).then(data => document.getElementById('sidebar').innerHTML = data);
+        fetch('common/html/header.html').then(response => response.text()).then(data => document.getElementById('header').innerHTML = data);
+        fetch('common/html/member_detail.html').then(response => response.text()).then(data => document.getElementById('member-detail').innerHTML = data);
+    </script>
+</body>
+</html>
