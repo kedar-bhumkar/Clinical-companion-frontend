@@ -26,7 +26,7 @@ footer {
 
 #chatPopup {
     position: fixed;
-    bottom: 40px;
+    bottom: 60px;
     right: 20px;
     width: 400px;
     height: 400px;
@@ -112,8 +112,50 @@ footer {
 }
 
 #messageInput {
-    flex: 1;
-    padding: 5px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #24292e;
+}
+
+#messageInput::before,
+#messageInput::after {
+    content: '\200B';
+}
+
+#messageInput {
+    --mention-color: #0366d6;
+    --mention-bg: #f1f8ff;
+}
+
+@supports (--custom: property) {
+    @property --mention-start {
+        syntax: '<color>';
+        inherits: false;
+        initial-value: transparent;
+    }
+    @property --mention-end {
+        syntax: '<color>';
+        inherits: false;
+        initial-value: transparent;
+    }
+
+    #messageInput {
+        background-image: linear-gradient(90deg, 
+            var(--mention-start) 0%, var(--mention-start) 50%, 
+            var(--mention-end) 50%, var(--mention-end) 100%);
+        background-size: 200% 100%;
+        background-position: 100% 0;
+        transition: background-position 0s ease;
+    }
+}
+
+#messageInput:not(:focus) {
+    --mention-start: var(--mention-bg);
+    --mention-end: transparent;
+    color: var(--mention-color);
+    background-position: 0 0;
+    transition: background-position 0.3s ease;
 }
 
 #sendButton {
@@ -322,4 +364,127 @@ textarea {
     font-weight: bold;
     color: #3498db;
     text-decoration: underline;
+}
+
+#dropdownContainer {
+    position: absolute;
+    background-color: #ffffff;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    box-shadow: 0 8px 24px rgba(149,157,165,0.2);
+    z-index: 1000;
+    max-height: 150px;
+    overflow-y: auto;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.dropdown-option {
+    padding: 8px 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    color: #24292e;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-option:hover {
+    background-color: #f6f8fa;
+}
+
+.at-mention {
+    font-weight: 600;
+    color: #0366d6;
+    background-color: #f1f8ff;
+    border-radius: 3px;
+    padding: 0 3px;
+    font-size: 14px;
+}
+
+#messageInput {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #24292e;
+}
+
+#messageInput::before,
+#messageInput::after {
+    content: '\200B';
+}
+
+#messageInput {
+    --mention-color: #0366d6;
+    --mention-bg: #f1f8ff;
+}
+
+@supports (--custom: property) {
+    @property --mention-start {
+        syntax: '<color>';
+        inherits: false;
+        initial-value: transparent;
+    }
+    @property --mention-end {
+        syntax: '<color>';
+        inherits: false;
+        initial-value: transparent;
+    }
+
+    #messageInput {
+        background-image: linear-gradient(90deg, 
+            var(--mention-start) 0%, var(--mention-start) 50%, 
+            var(--mention-end) 50%, var(--mention-end) 100%);
+        background-size: 200% 100%;
+        background-position: 100% 0;
+        transition: background-position 0s ease;
+    }
+}
+
+#messageInput:not(:focus) {
+    --mention-start: var(--mention-bg);
+    --mention-end: transparent;
+    color: var(--mention-color);
+    background-position: 0 0;
+    transition: background-position 0.3s ease;
+}
+
+.dropdown {
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    width: 200px;
+}
+
+.dropdown-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover,
+.dropdown-item.active {
+    background-color: #f5f5f5;
+}
+
+.dropdown-item i {
+    margin-right: 12px;
+    font-size: 18px;
+    width: 24px;
+    text-align: center;
+}
+
+.dropdown-item span {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Style for the @Option: text */
+.option-text {
+    color: #4CAF50;
+    font-weight: bold;
 }

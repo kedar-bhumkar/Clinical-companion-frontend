@@ -333,10 +333,10 @@
 
                 console.log('Parsed data:', data);
 
-                if (data && data.llm_response && data.llm_response.response) {
+                if (data && data.llm_response && data.llm_response) {
                     let summaries;
                     try {
-                        summaries = JSON.parse(data.llm_response.response);
+                        summaries = JSON.parse(data.llm_response);
                     } catch (summaryParseError) {
                         console.error('Error parsing summaries:', summaryParseError);
                         throw new Error('Invalid summary data in server response');

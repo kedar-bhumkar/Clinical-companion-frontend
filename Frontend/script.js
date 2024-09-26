@@ -13,7 +13,118 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let chatMessages = [];
 
+    
+    const dropdownOptions = [
+        { text: 'Job aid', icon: 'fas fa-briefcase' },
+        { text: 'Med lookup', icon: 'fas fa-pills' },
+        { text: 'DX code search', icon: 'fas fa-search' }
+    ];
+    let dropdown = null;
 
+    // Function to create and show dropdown
+    function showDropdown(inputRect, cursorPosition) {
+        if (dropdown) {
+            document.body.removeChild(dropdown);
+        }
+
+        dropdown = document.createElement('div');
+        dropdown.className = 'dropdown';
+        dropdown.style.position = 'absolute';
+        dropdown.style.left = `${inputRect.left + cursorPosition}px`;
+        dropdown.style.top = `${inputRect.bottom + 5}px`; // Added 5px gap
+
+        dropdownOptions.forEach((option, index) => {
+            const item = document.createElement('div');
+            item.className = 'dropdown-item';
+            item.innerHTML = `<i class="${option.icon}"></i><span>${option.text}</span>`;
+            item.addEventListener('click', () => selectOption(option.text));
+            dropdown.appendChild(item);
+        });
+
+        document.body.appendChild(dropdown);
+    }
+
+    // Function to handle option selection
+    function selectOption(option) {
+        const cursorPosition = messageInput.selectionStart;
+        const currentValue = messageInput.value;
+        const newValue = currentValue.slice(0, cursorPosition - 1) + 
+                         `@${option}:` + 
+                         currentValue.slice(cursorPosition);
+        messageInput.value = newValue;
+        messageInput.setSelectionRange(cursorPosition + option.length + 3, cursorPosition + option.length + 3);
+        hideDropdown();
+        messageInput.focus();
+    }
+
+    // Function to hide dropdown
+    function hideDropdown() {
+        if (dropdown) {
+            document.body.removeChild(dropdown);
+            dropdown = null;
+        }
+    }
+
+    // Event listener for input changes
+    messageInput.addEventListener('input', (e) => {
+        const cursorPosition = e.target.selectionStart;
+        const inputValue = e.target.value;
+        
+        if (inputValue[cursorPosition - 1] === '@') {
+            const inputRect = messageInput.getBoundingClientRect();
+            showDropdown(inputRect, cursorPosition * 8); // Assuming 8px per character
+        } else {
+            hideDropdown();
+        }
+
+        styleInput();
+
+        // Existing code for enabling/disabling send button
+        sendButton.disabled = messageInput.value.trim() === '';
+    });
+
+    // Event listener for keydown to handle keyboard navigation
+    messageInput.addEventListener('keydown', (e) => {
+        if (!dropdown) return;
+
+        const items = dropdown.querySelectorAll('.dropdown-item');
+        let activeIndex = Array.from(items).findIndex(item => item.classList.contains('active'));
+
+        switch (e.key) {
+            case 'ArrowDown':
+                e.preventDefault();
+                activeIndex = (activeIndex + 1) % items.length;
+                break;
+            case 'ArrowUp':
+                e.preventDefault();
+                activeIndex = (activeIndex - 1 + items.length) % items.length;
+                break;
+            case 'Enter':
+                e.preventDefault();
+                if (activeIndex !== -1) {
+                    selectOption(dropdownOptions[activeIndex].text);
+                }
+                return;
+            case 'Escape':
+                hideDropdown();
+                return;
+            default:
+                return;
+        }
+
+        items.forEach((item, index) => {
+            item.classList.toggle('active', index === activeIndex);
+        });
+    });
+
+    // Hide dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (e.target !== messageInput && e.target !== dropdown) {
+            hideDropdown();
+        }
+    });
+
+  
 // Function to fetch button configuration
 async function fetchButtonConfig() {
     console.log("Fetching button config");
@@ -38,7 +149,7 @@ async function fetchButtonConfig() {
 
         const result = await response.json();
         console.log("Button config: " + JSON.stringify(result));
-        return result.llm_response.response.options || {};
+        return result.llm_response.options || {};
     } catch (error) {
         console.error('Error fetching button configuration:', error);
         return {};
@@ -206,13 +317,15 @@ function handleHtmlResponse(data){
 function handleServerResponse(data) {
     console.log("Server response:", data);
 
-    if (data.llm_response.response.html) {
-        handleHtmlResponse(data.llm_response.response.html);
-    } else if (data.llm_response.response.auto_populate) {
-        populateFormFields(JSON.parse(data.llm_response.response.auto_populate));
+    if (data.llm_response.html) {
+        handleHtmlResponse(data.llm_response.html);
+    } else if (data.llm_response.auto_populate) {
+        populateFormFields(JSON.parse(data.llm_response.auto_populate));
         addMessageToChat('server', 'Form has been auto-populated with the available data.');
+    } else if (data.llm_response.bot_response) {
+        addMessageToChat('server', data.llm_response.bot_response);
     } else {
-        addMessageToChat('server', data.llm_response.response);
+        addMessageToChat('server', data.llm_response);
     }
 }
 
@@ -274,8 +387,8 @@ function sendMessage(intent) {
             patient_id: patient_id
         };
 
-        // If the intent is auto-populate, add form data to the request body
-        if (intent === 'user-intent' || (intent === 'system-intent' && message === 'auto_populate')) {
+        // If the intent is auto-populate or just user-intent, add form data to the request body
+        if (!message.includes('@Job aid:') && (intent === 'user-intent' || (intent === 'system-intent' && message === 'auto_populate'))) {
             requestBody.form_data = JSON.stringify(getFormData());
         }
 
@@ -401,6 +514,13 @@ style.textContent = `
 document.head.appendChild(style);
 
 loadChatHistory();
+
+// Add this function to parse and style the input
+function styleInput() {
+    const input = messageInput.value;
+    const styledInput = input.replace(/@(Job aid|Med lookup|DX code search):/g, '<span class="option-text">@$1:</span>');
+    messageInput.innerHTML = styledInput;
+}
 });
 
 // Remove this line as it's now redundant
