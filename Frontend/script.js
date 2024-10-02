@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const dropdownOptions = [
         { text: 'Job aid', icon: 'fas fa-briefcase' },
+        { text: 'Web', icon: 'fas fa-search' },
         { text: 'Med lookup', icon: 'fas fa-pills' },
         { text: 'DX code search', icon: 'fas fa-search' }
     ];
@@ -388,7 +389,7 @@ function sendMessage(intent) {
         };
 
         // If the intent is auto-populate or just user-intent, add form data to the request body
-        if (!message.includes('@Job aid:') && (intent === 'user-intent' || (intent === 'system-intent' && message === 'auto_populate'))) {
+        if (!message.includes('@Job aid:') && !message.includes('@Web:') && (intent === 'user-intent' || (intent === 'system-intent' && message === 'auto_populate'))) {
             requestBody.form_data = JSON.stringify(getFormData());
         }
 
@@ -518,7 +519,7 @@ loadChatHistory();
 // Add this function to parse and style the input
 function styleInput() {
     const input = messageInput.value;
-    const styledInput = input.replace(/@(Job aid|Med lookup|DX code search):/g, '<span class="option-text">@$1:</span>');
+    const styledInput = input.replace(/@(Job aid|Web|Med lookup|DX code search):/g, '<span class="option-text">@$1:</span>');
     messageInput.innerHTML = styledInput;
 }
 });
