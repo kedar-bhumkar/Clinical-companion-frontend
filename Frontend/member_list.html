@@ -108,6 +108,14 @@
         .summary-cell {
             min-width: 200px;
         }
+        .soap-note {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+        }
+        .soap-note:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -124,20 +132,23 @@
                                 <th>Gender</th>
                                 <th>Date of Birth</th>
                                 <th>Phone</th>
-                                <th>Email</th>
                                 <th>Risk Level</th>
+                                <th>HRA Due Date</th>
+                                <th>Last Visit Date</th>
+                                <th>Last Visit SOAP Note</th>
                                 <th>Patient Summary</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Example rows, replace with dynamic data -->
                             <tr>
                                 <td><i class="fas fa-user-circle fa-2x"></i> <a href="landing_page.html?id=1" data-id="1">John Doe</a></td>
                                 <td>Male</td>
                                 <td>1985-05-15</td>
                                 <td>(555) 123-4567</td>
-                                <td>john.doe@example.com</td>
                                 <td class="risk-high">High</td>
+                                <td>06/30/2023</td>
+                                <td>05/15/2023</td>
+                                <td><a href="#" class="soap-note">SN-12345</a></td>
                                 <td class="summary-cell">
                                     <span class="summarizing">
                                         <i class="fas fa-sync-alt"></i>Summarizing
@@ -149,8 +160,10 @@
                                 <td>Female</td>
                                 <td>1990-08-22</td>
                                 <td>(555) 987-6543</td>
-                                <td>jane.smith@example.com</td>
                                 <td class="risk-low">Low</td>
+                                <td>07/15/2023</td>
+                                <td>04/22/2023</td>
+                                <td><a href="#" class="soap-note">SN-67890</a></td>
                                 <td class="summary-cell">
                                     <span class="summarizing">
                                         <i class="fas fa-sync-alt"></i>Summarizing
@@ -162,8 +175,10 @@
                                 <td>Male</td>
                                 <td>1978-11-30</td>
                                 <td>(555) 246-8135</td>
-                                <td>robert.johnson@example.com</td>
                                 <td class="risk-high">High</td>
+                                <td>08/01/2023</td>
+                                <td>05/30/2023</td>
+                                <td><a href="#" class="soap-note">SN-24680</a></td>
                                 <td class="summary-cell">
                                     <span class="summarizing">
                                         <i class="fas fa-sync-alt"></i>Summarizing
@@ -175,8 +190,10 @@
                                 <td>Female</td>
                                 <td>1992-03-18</td>
                                 <td>(555) 369-2580</td>
-                                <td>emily.brown@example.com</td>
                                 <td class="risk-low">Low</td>
+                                <td>07/20/2023</td>
+                                <td>05/18/2023</td>
+                                <td><a href="#" class="soap-note">SN-13579</a></td>
                                 <td class="summary-cell">
                                     <span class="summarizing">
                                         <i class="fas fa-sync-alt"></i>Summarizing
@@ -188,8 +205,10 @@
                                 <td>Male</td>
                                 <td>1980-09-05</td>
                                 <td>(555) 147-2589</td>
-                                <td>michael.wilson@example.com</td>
                                 <td class="risk-medium">Medium</td>
+                                <td>08/15/2023</td>
+                                <td>05/05/2023</td>
+                                <td><a href="#" class="soap-note">SN-97531</a></td>
                                 <td class="summary-cell">
                                     <span class="summarizing">
                                         <i class="fas fa-sync-alt"></i>Summarizing
@@ -201,8 +220,10 @@
                                 <td>Female</td>
                                 <td>1988-12-10</td>
                                 <td>(555) 753-9514</td>
-                                <td>sarah.davis@example.com</td>
                                 <td class="risk-high">High</td>
+                                <td>07/10/2023</td>
+                                <td>05/10/2023</td>
+                                <td><a href="#" class="soap-note">SN-86420</a></td>
                                 <td class="summary-cell">
                                     <span class="summarizing">
                                         <i class="fas fa-sync-alt"></i>Summarizing
@@ -214,8 +235,10 @@
                                 <td>Male</td>
                                 <td>1995-06-25</td>
                                 <td>(555) 951-7532</td>
-                                <td>david.martinez@example.com</td>
                                 <td class="risk-low">Low</td>
+                                <td>08/25/2023</td>
+                                <td>05/25/2023</td>
+                                <td><a href="#" class="soap-note">SN-75319</a></td>
                                 <td class="summary-cell">
                                     <span class="summarizing">
                                         <i class="fas fa-sync-alt"></i>Summarizing
@@ -227,8 +250,10 @@
                                 <td>Female</td>
                                 <td>1983-02-14</td>
                                 <td>(555) 852-9630</td>
-                                <td>lisa.anderson@example.com</td>
                                 <td class="risk-medium">Medium</td>
+                                <td>07/14/2023</td>
+                                <td>05/14/2023</td>
+                                <td><a href="#" class="soap-note">SN-95173</a></td>
                                 <td class="summary-cell">
                                     <span class="summarizing">
                                         <i class="fas fa-sync-alt"></i>Summarizing
@@ -240,8 +265,10 @@
                                 <td>Male</td>
                                 <td>1976-08-30</td>
                                 <td>(555) 741-8520</td>
-                                <td>james.taylor@example.com</td>
                                 <td class="risk-high">High</td>
+                                <td>06/30/2023</td>
+                                <td>05/30/2023</td>
+                                <td><a href="#" class="soap-note">SN-35791</a></td>
                                 <td class="summary-cell">
                                     <span class="summarizing">
                                         <i class="fas fa-sync-alt"></i>Summarizing
@@ -253,8 +280,10 @@
                                 <td>Female</td>
                                 <td>1993-11-07</td>
                                 <td>(555) 369-1470</td>
-                                <td>emma.thomas@example.com</td>
                                 <td class="risk-low">Low</td>
+                                <td>08/07/2023</td>
+                                <td>05/07/2023</td>
+                                <td><a href="#" class="soap-note">SN-15937</a></td>
                                 <td class="summary-cell">
                                     <span class="summarizing">
                                         <i class="fas fa-sync-alt"></i>Summarizing
@@ -266,15 +295,16 @@
                                 <td>Male</td>
                                 <td>1987-04-20</td>
                                 <td>(555) 258-7410</td>
-                                <td>christopher.lee@example.com</td>
                                 <td class="risk-medium">Medium</td>
+                                <td>07/20/2023</td>
+                                <td>05/20/2023</td>
+                                <td><a href="#" class="soap-note">SN-75395</a></td>
                                 <td class="summary-cell">
                                     <span class="summarizing">
                                         <i class="fas fa-sync-alt"></i>Summarizing
                                     </span>
                                 </td>
                             </tr>
-   
                         </tbody>
                     </table>
                 </div>
